@@ -1,5 +1,3 @@
-import userIconImage from "./assets/images/usericon.png";
-
 const crimeLocation = document.getElementById("location");
 const crimeTime = document.getElementById("date");
 const userName = document.getElementById("username");
@@ -13,7 +11,7 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 const userIcon = L.icon({
-  iconUrl: userIconImage,
+  iconUrl: "./assets/images/usericon.png",
   iconSize: [80, 80],
   iconAnchor: [16, 32],
 });
