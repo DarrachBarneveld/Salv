@@ -1,8 +1,17 @@
 const crimeLocation = document.getElementById("location");
 const crimeTime = document.getElementById("date");
 const userName = document.getElementById("username");
+const geolocationBtn = document.getElementById("geolocation-btn");
+const reportCrimeBtn = document.getElementById("report-crime-btn");
+const modal = document.getElementById("modal");
+const crimeForm = document.getElementById("crimeForm");
+const crimeType = document.getElementById("crimeType");
+const crimeDescription = document.getElementById("crimeDescription");
+const urgentCheck = document.getElementById("urgent");
 
 const map = L.map("map").setView([53.350498598, -6.252332324], 15);
+
+let CRIME_LAT_LNG = "";
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
@@ -33,7 +42,6 @@ async function getLocation() {
 async function getCurrentLocationLatLng() {
   try {
     const position = await getLocation();
-
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
     return { lat, lng };
@@ -58,16 +66,44 @@ function placeMarker(location, icon) {
 }
 
 function reportCrime(e) {
-  placeMarker(e.latlng);
-
-  const { lat, lng } = e.latlng;
+  e.preventDefault();
+  const type = crimeType.value;
+  const description = crimeDescription.value;
+  const isUrgent = urgentCheck.checked;
   const currentTime = new Date().toLocaleString();
 
-  crimeLocation.innerText = `Crime at ${lat} ${lng}`;
-  crimeTime.innerText = currentTime;
-  userName.innerText = "Reported by: Admin";
+  console.log(type);
+
+  //   send data to DB
+  const data = {
+    type,
+    description,
+    isUrgent,
+    crimeTime,
+    reportedBy: "Admin",
+  };
+
+  const marker = placeMarker(CRIME_LAT_LNG);
+
+  const tooltipContent = `${type} <br />
+                            ${description} <br />
+                            ${isUrgent ? "Urgent" : ""} <br />
+                            ${currentTime}`;
+
+  marker.bindTooltip(tooltipContent).openTooltip();
+
+  CRIME_LAT_LNG = "";
+
+  modal.style.display = "none";
 }
 
-map.on("click", reportCrime);
+function displayForm(e) {
+  modal.style.display = "block";
+  CRIME_LAT_LNG = e.latlng;
+}
 
-flyToCurrentLocation();
+map.on("click", displayForm);
+
+geolocationBtn.addEventListener("click", flyToCurrentLocation);
+reportCrimeBtn.addEventListener("click", displayForm);
+crimeForm.addEventListener("submit", reportCrime);

@@ -19,21 +19,69 @@
     <main>
       <div class="map-container">
         <div id="map"></div>
-        <div class="crime-container">
-          <h2>Crime stats</h2>
-          <ul class="crime-stats">
-            <li id="location"></li>
-            <li id="date"></li>
-            <li id="username"></li>
-          </ul>
-        </div>
+      </div>
+
+      <div class="controls">
+        <button id="report-crime-btn" class="btn">
+          <i
+            class="fa-solid fa-circle-exclamation"
+            style="color: var(--clr-red)"
+          ></i>
+        </button>
+        <button
+          id="geolocation-btn"
+          class="btn"
+          onclick="flyToCurrentLocation"
+          style="color: var(--clr-blue)"
+        >
+          <i class="fa-solid fa-location-crosshairs"></i>
+        </button>
+      </div>
+
+      <div class="crime-container">
+        <h2>Crime stats</h2>
+        <ul class="crime-stats">
+          <li id="location"></li>
+          <li id="date"></li>
+          <li id="username"></li>
+        </ul>
       </div>
     </main>
+
+    <!-- Modal -->
+    <div id="modal">
+      <form action="#" method="post" id="crimeForm">
+        <label for="crimeType">Type of Crime:</label>
+        <select id="crimeType" name="crimeType" required>
+          <option value="Theft">Theft</option>
+          <option value="Assault">Assault</option>
+          <option value="Burglary">Burglary</option>
+          <option value="Vandalism">Vandalism</option>
+        </select>
+        <label for="crimeDescription">Description:</label>
+        <textarea
+          id="crimeDescription"
+          name="crimeDescription"
+          rows="4"
+          required
+        ></textarea>
+        <div class="checkbox-container">
+          <label for="urgent">Urgent?</label>
+          <input type="checkbox" id="urgent" name="urgent" />
+        </div>
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
+    <script
+      src="https://kit.fontawesome.com/2730ac997a.js"
+      crossorigin="anonymous"
+    ></script>
+
     <script type="module" src="./script.js"></script>
   </body>
 </html>
