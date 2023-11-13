@@ -52,7 +52,14 @@ async function getCurrentLocationLatLng() {
 }
 
 async function flyToCurrentLocation() {
+  geolocationBtn.innerHTML = "";
+  const loader = document.createElement("div");
+  loader.id = "loader";
+  geolocationBtn.appendChild(loader);
   const { lat, lng } = await getCurrentLocationLatLng();
+
+  geolocationBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
+
   map.flyTo([lat, lng], 16);
   placeMarker([lat, lng], userIcon);
 }

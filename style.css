@@ -145,6 +145,15 @@ input[type="checkbox"] {
 .checkbox-container label {
   margin-bottom: 0;
 }
+
+#loader {
+  border: 4px solid var(--clr-blue);
+  border-top: 4px solid white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  animation: spin 2s linear infinite;
+}
 /* .leaflet-marker-icon {
   animation: pulse 2s infinite;
   border-radius: 100%;
@@ -162,3 +171,13 @@ input[type="checkbox"] {
     box-shadow: 0 0 10px rgba(255, 0, 0, 1);
   }
 } */
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
