@@ -79,8 +79,6 @@ function reportCrime(e) {
   const isUrgent = urgentCheck.checked;
   const currentTime = new Date().toLocaleString();
 
-  console.log(type);
-
   //   send data to DB
   const data = {
     type,
@@ -105,12 +103,18 @@ function reportCrime(e) {
 }
 
 function displayForm(e) {
-  modal.style.display = "block";
+  modal.style.display = "flex";
   CRIME_LAT_LNG = e.latlng;
+}
+
+function closeModal() {
+  modal.style.display = "none";
 }
 
 map.on("click", displayForm);
 
+modal.addEventListener("click", closeModal);
 geolocationBtn.addEventListener("click", flyToCurrentLocation);
 reportCrimeBtn.addEventListener("click", displayForm);
 crimeForm.addEventListener("submit", reportCrime);
+crimeForm.addEventListener("click", (e) => e.stopPropagation());
